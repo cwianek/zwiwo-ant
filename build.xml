@@ -33,21 +33,6 @@
         </copy>
     </target>
 
-
-    <target name="showLanguages" depends="build">
-        <taskdef name="showLanguages" classname="zwiwo.groovy.ShowLanguages" classpath="build/classes">
-            <classpath refid="groovy.classpath"/>
-        </taskdef>
-        <showLanguages mode="debug"></showLanguages>
-    </target>
-
-    <target name="propertiesDumper" depends="build">
-        <taskdef name="propertiesDumper" classname="zwiwo.groovy.PropertiesDumper" classpath="build/classes">
-            <classpath refid="groovy.classpath"/>
-        </taskdef>
-        <propertiesDumper namematch="lang"></propertiesDumper>
-    </target>
-
     <target name="metalink" depends="build">
         <taskdef name="metalink" classname="zwiwo.groovy.Metalink" classpath="build/classes">
             <classpath refid="groovy.classpath"/>
