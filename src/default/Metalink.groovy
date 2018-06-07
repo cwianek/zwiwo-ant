@@ -1,5 +1,3 @@
-package zwiwo.groovy
-
 import org.apache.tools.ant.BuildException
 import org.apache.tools.ant.Project
 import org.apache.tools.ant.Task
@@ -27,9 +25,9 @@ class Metalink extends Task{
     @Override
     void execute() throws BuildException {
         url = url?: project.properties['server.files.url']
-        xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-        def root = xml.createElementNS("urn:ietf:params:xml:ns:metalink","metalink");
-        xml.appendChild(root);
+        xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument()
+        def root = xml.createElementNS("urn:ietf:params:xml:ns:metalink","metalink")
+        xml.appendChild(root)
         fileSet.each { file ->
             if(!file.isDirectory()) {
                 root.appendChild(addFileToXml(file))
@@ -40,16 +38,16 @@ class Metalink extends Task{
                 .newInstance()
                 .newTransformer()
         transformer.setOutputProperty(OutputKeys.INDENT,"yes")
-        def source = new DOMSource(xml);
-        def result = new StreamResult(new FileOutputStream(file));
-        transformer.transform(source, result);
+        def source = new DOMSource(xml)
+        def result = new StreamResult(new FileOutputStream(file))
+        transformer.transform(source, result)
     }
 
     def addFileToXml(FileResource file){
         def element = xml.createElement("file")
         element.setAttribute("name",file.getFile().getName())
 
-        def size = xml.createElement("size");
+        def size = xml.createElement("size")
         size.appendChild(xml.createTextNode(file.getFile().length()+""))
 
         def md5 = hash(file.getFile())
