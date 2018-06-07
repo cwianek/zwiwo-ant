@@ -5,10 +5,8 @@ import org.apache.tools.ant.types.FileSet
 import org.apache.tools.ant.types.resources.FileResource
 import org.w3c.dom.Document
 
-import javax.xml.parsers.DocumentBuilder
 import javax.xml.parsers.DocumentBuilderFactory
 import javax.xml.transform.OutputKeys
-import javax.xml.transform.Transformer
 import javax.xml.transform.TransformerFactory
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.stream.StreamResult
@@ -28,6 +26,11 @@ class Metalink extends Task{
         xml = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument()
         def root = xml.createElementNS("urn:ietf:params:xml:ns:metalink","metalink")
         xml.appendChild(root)
+
+        def published = xml.createElement("published")
+        published.appendChild(xml.createTextNode(new Date().toString()))
+        root.appendChild(published)
+
         fileSet.each { file ->
             if(!file.isDirectory()) {
                 root.appendChild(addFileToXml(file))
